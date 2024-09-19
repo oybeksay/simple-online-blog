@@ -1,0 +1,26 @@
+package uz.online.blog.config.security;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+
+import java.util.Objects;
+
+@Component
+public class SessionUser {
+
+    public CustomUserDetails user() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+            return (CustomUserDetails) authentication.getPrincipal();
+        }
+        return null;
+    }
+
+    public Integer id() {
+        CustomUserDetails user = user();
+        return (user != null) ? user.getId() : -1;
+    }
+}

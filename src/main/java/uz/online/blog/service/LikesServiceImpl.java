@@ -1,0 +1,42 @@
+package uz.online.blog.service;
+
+import org.springframework.stereotype.Service;
+import uz.online.blog.dto.LikesDTO;
+import uz.online.blog.entity.Likes;
+import uz.online.blog.mapper.LikesMapper;
+import uz.online.blog.repository.LikesRepository;
+
+@Service
+public class LikesServiceImpl implements LikesService {
+    private final LikesRepository likesRepository;
+    private final LikesMapper likesMapper;
+
+    public LikesServiceImpl(LikesRepository likesRepository, LikesMapper likesMapper) {
+        this.likesRepository = likesRepository;
+        this.likesMapper = likesMapper;
+    }
+
+    @Override
+    public Likes addLike(LikesDTO likesDTO) {
+        Likes like = likesMapper.fromDto(likesDTO);
+        if (likesRepository.findByUserIdAndPostId(likesDTO.getUserId(), likesDTO.getPostId()).isPresent()) {
+            throw new RuntimeException("Member already liked");
+        }
+        return likesRepository.save(like);
+    }
+
+    @Override
+    public Integer getLikesCountByPostId(Integer postId) {
+        return likesRepository.countByPostId(postId);
+    }
+
+    @Override
+    public void deleteLikesById(Integer id) {
+        likesRepository.deleteByUserId(id);
+    }
+
+    @Override
+    public void deleteByPostId(Integer id) {
+        likesRepository.deleteByPostId(id);
+    }
+}
