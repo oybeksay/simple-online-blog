@@ -1,8 +1,10 @@
 package uz.online.blog.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.online.blog.dto.CommentDTO;
 import uz.online.blog.entity.Comment;
+import uz.online.blog.entity.Post;
 import uz.online.blog.mapper.CommentMapper;
 import uz.online.blog.repository.CommentRepository;
 
@@ -13,16 +15,21 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
+    private final PostService postService;
 
-    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper) {
+    @Autowired
+    public CommentServiceImpl(CommentRepository commentRepository, CommentMapper commentMapper, PostService postService) {
         this.commentRepository = commentRepository;
         this.commentMapper = commentMapper;
+        this.postService = postService;
     }
 
     @Override
-    public Comment addComment(CommentDTO comment) {
-        Comment newComment = commentMapper.fromDto(comment);
-        return commentRepository.save(newComment);
+    public Comment addComment(CommentDTO commentDTO) {
+        Post post = postService.findById(commentDTO.getPostId());
+        Comment comment = commentMapper.fromDto(commentDTO);
+        comment.setPost(post);
+        return commentRepository.save(comment);
     }
 
     @Override
@@ -38,10 +45,5 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteCommentByPostIdAndUserId(Integer commentId) {
         commentRepository.deleteById(commentId);
-    }
-
-    @Override
-    public void deleteByPostId(Integer id) {
-        commentRepository.deleteByPostId(id);
     }
 }

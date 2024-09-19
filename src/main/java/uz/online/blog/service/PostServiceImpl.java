@@ -1,29 +1,29 @@
 package uz.online.blog.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.online.blog.dto.PostDTO;
+import uz.online.blog.entity.Likes;
 import uz.online.blog.entity.Post;
 import uz.online.blog.mapper.PostMapper;
-import uz.online.blog.repository.CommentRepository;
 import uz.online.blog.repository.LikesRepository;
 import uz.online.blog.repository.PostRepository;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
-    private final LikesService likesService;
-    private final CommentService commentService;
+    private final LikesRepository likesRepository;
 
-    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper,  LikesService likesService, CommentService commentService) {
+    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper, LikesRepository likesRepository) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
-        this.likesService = likesService;
-        this.commentService = commentService;
+        this.likesRepository = likesRepository;
     }
 
     @Override
@@ -33,20 +33,17 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findAll() {
-        return List.of();
-    }
-
-    @Override
     public Post findById(Integer id) {
-        return postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
+        List<Likes> likes = likesRepository.findByPostId(id);
+        log.info("likes {}", likes);
+        post.setLikes(likes);
+        return post;
     }
 
     @Override
     public void delete(Integer id) {
         postRepository.deleteById(id);
-        likesService.deleteByPostId(id);
-        commentService.deleteByPostId(id);
     }
 
     @Override
@@ -55,8 +52,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> finByTitle(String title) {
-        return postRepository.findByTitleContainingIgnoreCase(title);
+    public List<Post> finByTitleOrDestcription(String query) {
+        return postRepository.findByTitleAndBodyContainingIgnoreCase(query);
     }
 
     @Override

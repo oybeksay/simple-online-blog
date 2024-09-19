@@ -15,5 +15,4 @@ public interface CommentService {
 
     void deleteCommentByPostIdAndUserId(Integer commentId);
 
-    void deleteByPostId(Integer id);
 }

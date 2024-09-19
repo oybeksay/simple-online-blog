@@ -27,8 +27,12 @@ public class TelegramAppender extends AppenderBase<LoggingEvent> {
 
     @Override
     protected void append(LoggingEvent loggingEvent) {
-        String logMessage = loggingEvent.toString();
-        SendMessage sendMessage = new SendMessage(CHAT_ID,logMessage);
-        bot.execute(sendMessage);
+        try {
+            String logMessage = loggingEvent.getFormattedMessage();
+            SendMessage sendMessage = new SendMessage(CHAT_ID, logMessage);
+            bot.execute(sendMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

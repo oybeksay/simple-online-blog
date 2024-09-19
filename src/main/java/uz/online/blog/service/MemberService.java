@@ -11,12 +11,6 @@ public interface MemberService {
 
     Member findByUsername(String username);
 
-    Member findByEmail(String email);
-
-    List<Member> findAll();
-
-    Member findById(int id);
-
     void delete(String username);
 
     Member update(Member user);

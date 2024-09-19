@@ -10,15 +10,13 @@ import java.util.List;
 public interface PostService {
     Post save(PostDTO postDTO);
 
-    List<Post> findAll();
-
     Post findById(Integer id);
 
     void delete(Integer id);
 
     Post update(Integer id, PostDTO postDTO);
 
-    List<Post> finByTitle(String title);
+    List<Post> finByTitleOrDestcription(String query);
 
     Page<Post> getPageBySize(Pageable pageable);
 }

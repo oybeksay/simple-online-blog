@@ -3,6 +3,7 @@ package uz.online.blog.service;
 import org.springframework.stereotype.Service;
 import uz.online.blog.dto.LikesDTO;
 import uz.online.blog.entity.Likes;
+import uz.online.blog.entity.Post;
 import uz.online.blog.mapper.LikesMapper;
 import uz.online.blog.repository.LikesRepository;
 
@@ -10,15 +11,19 @@ import uz.online.blog.repository.LikesRepository;
 public class LikesServiceImpl implements LikesService {
     private final LikesRepository likesRepository;
     private final LikesMapper likesMapper;
+    private final PostService postService;
 
-    public LikesServiceImpl(LikesRepository likesRepository, LikesMapper likesMapper) {
+    public LikesServiceImpl(LikesRepository likesRepository, LikesMapper likesMapper, PostService postService) {
         this.likesRepository = likesRepository;
         this.likesMapper = likesMapper;
+        this.postService = postService;
     }
 
     @Override
     public Likes addLike(LikesDTO likesDTO) {
+        Post post = postService.findById(likesDTO.getPostId());
         Likes like = likesMapper.fromDto(likesDTO);
+        like.setPost(post);
         if (likesRepository.findByUserIdAndPostId(likesDTO.getUserId(), likesDTO.getPostId()).isPresent()) {
             throw new RuntimeException("Member already liked");
         }
@@ -35,8 +40,4 @@ public class LikesServiceImpl implements LikesService {
         likesRepository.deleteByUserId(id);
     }
 
-    @Override
-    public void deleteByPostId(Integer id) {
-        likesRepository.deleteByPostId(id);
-    }
 }

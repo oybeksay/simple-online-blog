@@ -35,21 +35,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findByEmail(String email) {
-        return null;
-    }
-
-    @Override
-    public List<Member> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public Member findById(int id) {
-        return null;
-    }
-
-    @Override
     public void delete(String username) {
         memberRepository.deleteByUsername(username);
     }

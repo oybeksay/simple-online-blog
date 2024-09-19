@@ -19,7 +19,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/create")
     public ResponseEntity<Comment> addComment(@RequestBody CommentDTO commentDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.addComment(commentDTO));
     }
@@ -29,14 +29,14 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
     }
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable Integer commentId) {
-        return ResponseEntity.ok(commentService.getCommentById(commentId));
+    @GetMapping("/{id}")
+    public ResponseEntity<Comment> getCommentById(@PathVariable Integer id) {
+        return ResponseEntity.ok(commentService.getCommentById(id));
     }
 
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteCommentById(@PathVariable Integer commentId) {
-        commentService.deleteCommentByPostIdAndUserId(commentId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCommentById(@PathVariable Integer id) {
+        commentService.deleteCommentByPostIdAndUserId(id);
         return ResponseEntity.noContent().build();
     }
 }

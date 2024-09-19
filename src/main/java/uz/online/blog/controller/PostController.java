@@ -29,9 +29,9 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(postDTO));
     }
 
-    @GetMapping("/find/{title}")
-    public ResponseEntity<List<Post>> getPostByTitle(@PathVariable String title) {
-        return ResponseEntity.ok(postService.finByTitle(title));
+    @GetMapping("/search")
+    public ResponseEntity<List<Post>> getPostByTitle(@RequestParam(name = "query") String query) {
+        return ResponseEntity.ok(postService.finByTitleOrDestcription(query));
     }
 
     @GetMapping
@@ -45,7 +45,7 @@ public class PostController {
         return ResponseEntity.ok(postPagedModel);
     }
 
-    @GetMapping("/find-by-id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable Integer id) {
         return ResponseEntity.ok(postService.findById(id));
     }
@@ -54,6 +54,11 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
         postService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Post> updatePost(@PathVariable Integer id, @RequestBody PostDTO postDTO) {
+        return ResponseEntity.ok(postService.update(id, postDTO));
     }
 
 }

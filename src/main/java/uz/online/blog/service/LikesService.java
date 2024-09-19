@@ -11,5 +11,4 @@ public interface LikesService {
 
     void deleteLikesById(Integer id);
 
-    void deleteByPostId(Integer id);
 }
