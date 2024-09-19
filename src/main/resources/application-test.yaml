@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/onlin_post?currentSchema=test'
+    url: 'jdbc:postgresql://localhost:5432/database_name?currentSchema=schema_name'
     username: postgres
-    password: oybek
+    password: your_password
     driver-class-name: org.postgresql.Driver
 
   jpa:
