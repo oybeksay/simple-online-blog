@@ -27,6 +27,7 @@ public class AuthUserController {
         this.authenticationManager = authenticationManager;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/register")
     public ResponseEntity<AuthUser> register(@RequestBody AuthUserDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authUserService.save(dto));

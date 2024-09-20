@@ -1,5 +1,6 @@
 package uz.online.blog.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class CommentController {
     }
 
     @GetMapping("/post/{postId}")
+    @Operation(summary = "This endpoint get all comments by post id")
     public ResponseEntity<List<Comment>> getCommentByPostId(@PathVariable Integer postId) {
         return ResponseEntity.ok(commentService.getCommentsByPostId(postId));
     }
@@ -34,9 +36,9 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getCommentById(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCommentById(@PathVariable Integer id) {
-        commentService.deleteCommentByPostIdAndUserId(id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteCommentById(@RequestParam Integer postId, @RequestParam Integer userId) {
+        commentService.deleteCommentByPostIdAndUserId(postId,userId);
         return ResponseEntity.noContent().build();
     }
 }

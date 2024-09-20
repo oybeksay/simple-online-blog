@@ -13,6 +13,6 @@ public interface CommentService {
 
     Comment getCommentById(Integer commentId);
 
-    void deleteCommentByPostIdAndUserId(Integer commentId);
+    void deleteCommentByPostIdAndUserId(Integer postId, Integer userId);
 
 }

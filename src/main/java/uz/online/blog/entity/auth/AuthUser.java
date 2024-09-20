@@ -13,10 +13,10 @@ import uz.online.blog.entity.Auditable;
 @ToString
 @Entity
 public class AuthUser extends Auditable {
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
     @Email
-    @Column(unique = true)
+    @Column(unique = true,  nullable = false)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)

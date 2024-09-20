@@ -36,8 +36,9 @@ public class LikesServiceImpl implements LikesService {
     }
 
     @Override
-    public void deleteLikesById(Integer id) {
-        likesRepository.deleteByUserId(id);
+    public void deleteLikesById(Integer postId, Integer userId) {
+        Post post = postService.findById(postId);
+        likesRepository.deleteByPostAndUserId(post, userId);
     }
 
 }

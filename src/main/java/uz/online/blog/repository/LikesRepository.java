@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import uz.online.blog.entity.Likes;
+import uz.online.blog.entity.Post;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,6 @@ public interface LikesRepository extends JpaRepository<Likes, Integer> {
 
   @Query("from Likes l where l.post.id = ?1")
   List<Likes> findByPostId(Integer id);
+
+  void deleteByPostAndUserId(Post post, Integer userId);
 }

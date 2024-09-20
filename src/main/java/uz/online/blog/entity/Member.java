@@ -1,6 +1,7 @@
 package uz.online.blog.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,8 +20,11 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(unique = true, nullable = false)
     private String username;
     private String password;
+    @Email
+    @Column(unique = true, nullable = false)
     private String email;
     @CreatedDate
     @Column(updatable = false)

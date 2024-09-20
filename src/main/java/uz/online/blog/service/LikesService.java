@@ -9,6 +9,6 @@ public interface LikesService {
 
     Integer getLikesCountByPostId(Integer postId);
 
-    void deleteLikesById(Integer id);
+    void deleteLikesById(Integer postId, Integer userId);
 
 }

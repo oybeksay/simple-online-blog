@@ -34,11 +34,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(Integer id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
-        List<Likes> likes = likesRepository.findByPostId(id);
-        log.info("likes {}", likes);
-        post.setLikes(likes);
-        return post;
+       return postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
     }
 
     @Override
@@ -48,6 +44,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post update(Integer id, PostDTO postDTO) {
+        postRepository.updateTitleAndBodyById(postDTO.getTitle(),postDTO.getBody(),id);
         return null;
     }
 

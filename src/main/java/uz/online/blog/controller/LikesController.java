@@ -18,7 +18,7 @@ public class LikesController {
         this.likesService = likesService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/create")
     public ResponseEntity<Likes> addLike(@RequestBody LikesDTO likesDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(likesService.addLike(likesDTO));
     }
@@ -29,9 +29,10 @@ public class LikesController {
         return ResponseEntity.ok(likesService.getLikesCountByPostId(postId));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteLike(@PathVariable Integer id) {
-        likesService.deleteLikesById(id);
+    @DeleteMapping("/delete")
+    @Operation(summary = "delete like by postId and userId")
+    public ResponseEntity<Void> deleteLike(@RequestParam Integer postId, @RequestParam Integer userId) {
+        likesService.deleteLikesById(postId,userId);
         return ResponseEntity.noContent().build();
     }
 }
