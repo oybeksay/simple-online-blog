@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/test_database?currentSchema=test'
+    url: 'jdbc:postgresql://localhost:5432/your_database_name?currentSchema=test'
     username: postgres
     password: your_password
     driver-class-name: org.postgresql.Driver
@@ -10,9 +10,3 @@ spring:
     hibernate:
       ddl-auto: update
 
-
-
-admins:
-  username: your_username
-  password: your_password
-  email: your_email
