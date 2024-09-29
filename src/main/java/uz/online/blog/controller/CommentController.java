@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
+@PreAuthorize("isAuthenticated()")
 public class CommentController {
 
     private final CommentService commentService;
