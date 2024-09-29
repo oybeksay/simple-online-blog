@@ -40,8 +40,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member update(Member user) {
-        return null;
+    public Member update(Member member) {
+        return memberRepository.save(member);
     }
 
     @Override

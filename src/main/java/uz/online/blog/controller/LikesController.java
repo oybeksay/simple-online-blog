@@ -1,8 +1,10 @@
 package uz.online.blog.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.online.blog.dto.LikesDTO;
 import uz.online.blog.entity.Likes;
@@ -11,13 +13,10 @@ import uz.online.blog.service.LikesService;
 @RestController
 @RequestMapping("/likes")
 @PreAuthorize("isAuthenticated()")
+@RequiredArgsConstructor
 public class LikesController {
 
     private final LikesService likesService;
-
-    public LikesController(LikesService likesService) {
-        this.likesService = likesService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<Likes> addLike(@RequestBody LikesDTO likesDTO) {

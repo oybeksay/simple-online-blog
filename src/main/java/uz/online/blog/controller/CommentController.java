@@ -1,8 +1,10 @@
 package uz.online.blog.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.online.blog.dto.CommentDTO;
 import uz.online.blog.entity.Comment;
@@ -13,13 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/comment")
 @PreAuthorize("isAuthenticated()")
+@RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<Comment> addComment(@RequestBody CommentDTO commentDTO) {

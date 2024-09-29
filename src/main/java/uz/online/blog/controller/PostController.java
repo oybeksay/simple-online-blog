@@ -1,5 +1,6 @@
 package uz.online.blog.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedModel;
@@ -16,13 +17,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 @PreAuthorize("isAuthenticated()")
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody PostDTO postDTO) {

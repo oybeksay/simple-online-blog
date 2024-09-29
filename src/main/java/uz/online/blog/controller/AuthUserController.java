@@ -1,5 +1,6 @@
 package uz.online.blog.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,17 +16,13 @@ import uz.online.blog.service.AuthUserService;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthUserController {
 
     private final AuthUserService authUserService;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    public AuthUserController(AuthUserService authUserService, JwtTokenUtil jwtTokenUtil, AuthenticationManager authenticationManager) {
-        this.authUserService = authUserService;
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.authenticationManager = authenticationManager;
-    }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/register")
