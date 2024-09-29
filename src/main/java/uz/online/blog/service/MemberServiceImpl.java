@@ -31,7 +31,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member findByUsername(String username) {
-        return memberRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return memberRepository.findByUsername(username).orElseThrow(() -> new RuntimeException(username));
     }
 
     @Override
