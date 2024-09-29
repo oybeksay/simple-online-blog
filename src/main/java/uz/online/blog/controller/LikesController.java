@@ -10,6 +10,7 @@ import uz.online.blog.service.LikesService;
 
 @RestController
 @RequestMapping("/likes")
+@PreAuthorize("isAuthenticated()")
 public class LikesController {
 
     private final LikesService likesService;
