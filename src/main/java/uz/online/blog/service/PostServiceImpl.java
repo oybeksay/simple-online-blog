@@ -44,8 +44,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post update(Integer id, PostDTO postDTO) {
-        postRepository.updateTitleAndBodyById(postDTO.getTitle(),postDTO.getBody(),id);
-        return null;
+        return postRepository.updateTitleAndBodyById(postDTO.getTitle(),postDTO.getBody(),id);
     }
 
     @Override
